@@ -25,7 +25,7 @@
 </script>
 
 <template>
-    <main class="h-screen flex justify-center text-center text-white">
+    <main class="h-screen flex justify-center text-center text-white bg-[#ba4949]">
         <div class="mx-auto max-w-xl w-full space-y-9 mt-3">
             <header>
                 <AppNav>
