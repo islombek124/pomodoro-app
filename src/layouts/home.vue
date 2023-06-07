@@ -1,6 +1,9 @@
 <script setup lang="ts">
     import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/vue";
     import clickSound from "~/components/assets/click.mp3";
+    import { useSettings } from "~/stores/settings";
+
+    const store = useSettings();
 
     const activeTab = ref<0 | 1 | 2>(0);
     const currentPomodorro = ref<number>(0);
@@ -34,44 +37,44 @@
                     </template>
                 </AppNav>
             </header>
-            <div class="mx-auto max-w-lg w-full space-y-5">
+            <div class="mx-auto max-w-lg w-full space-y-5 px-2">
                 <div class="rounded-lg bg-white/10 p-10 w-full mx-auto shadow-lg">
                     <TabGroup :selected-index="activeTab" @change="playSound">
                         <TabList class="flex items-center space-x-7 text-base justify-center">
                             <Tab v-slot="{ selected }" as="template">
                                 <button
                                     class="rounded px-4 py-2 text-white"
-                                    :class="{ 'bg-gray-600/50': selected, '': !selected }" @click="activeTab = 0"
+                                    :class="{ 'bg-gray-600/50 font-bold': selected, '': !selected }" @click="activeTab = 0"
                                 >
-                                    Pomodoro
+                                    Pomo<span class="sm:inline-block hidden">doro</span>
                                 </button>
                             </Tab>
                             <Tab v-slot="{ selected }" as="template">
                                 <button
                                     class="rounded px-4 py-2 text-white"
-                                    :class="{ 'bg-gray-600/50 ': selected, '': !selected }" @click="activeTab = 1"
+                                    :class="{ 'bg-gray-600/50 font-bold': selected, '': !selected }" @click="activeTab = 1"
                                 >
-                                    Short break
+                                    Short <span class="sm:inline-block hidden">break</span>
                                 </button>
                             </Tab>
                             <Tab v-slot="{ selected }" as="template">
                                 <button
                                     class="rounded px-4 py-2 text-white"
-                                    :class="{ 'bg-gray-600/50': selected, '': !selected }" @click="activeTab = 2"
+                                    :class="{ 'bg-gray-600/50 font-bold': selected, '': !selected }" @click="activeTab = 2"
                                 >
-                                    Long break
+                                    Long <span class="sm:inline-block hidden">break</span>
                                 </button>
                             </Tab>
                         </TabList>
                         <TabPanels class="mt-5">
                             <TabPanel>
-                                <AppTimer :time="1500" @end="onTimerEnd('pomodorro')" />
+                                <AppTimer :time="store.pomodorro" @end="onTimerEnd('pomodorro')" />
                             </TabPanel>
                             <TabPanel>
-                                <AppTimer :time="300" @end="onTimerEnd('short-break')" />
+                                <AppTimer :time="store.shortBreak" @end="onTimerEnd('short-break')" />
                             </TabPanel>
                             <TabPanel>
-                                <AppTimer :time="900" @end="onTimerEnd('long-break')" />
+                                <AppTimer :time="store.longBreak" @end="onTimerEnd('long-break')" />
                             </TabPanel>
                         </TabPanels>
                     </TabGroup>

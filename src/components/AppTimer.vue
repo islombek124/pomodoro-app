@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { ref } from "vue";
-    import kitchen from "~/components/assets/kitchen.mp3";
+    import kitchenSound from "~/components/assets/kitchen.mp3";
 
     const props = defineProps<{
         time: number
@@ -45,17 +45,21 @@
     }
 
     function onTimeElapsed() {
-        new Audio(kitchen).play();
+        new Audio(kitchenSound).play();
         stop();
         emit("end");
     }
+
+    watch(() => props.time, (newVal) => {
+        remaining.value = newVal;
+    });
 
     onBeforeUnmount(() => stop());
 </script>
 
 <template>
     <div class="font-bold space-y-5 w-full">
-        <div class="md:text-9xl text-8xl">
+        <div class="md:text-9xl text-8xl text-center">
             {{ minutes }}:{{ seconds }}
         </div>
         <div>

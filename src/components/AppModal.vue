@@ -6,7 +6,9 @@
         TransitionChild,
         TransitionRoot,
     } from "@headlessui/vue";
+    import { useSettings } from "~/stores/settings";
 
+    const store = useSettings();
     const isOpen = ref<boolean>(false);
 
     function closeModal(): void {
@@ -14,6 +16,10 @@
     }
     function openModal(): void {
         isOpen.value = true;
+    }
+
+    function changeTime(t: number, e: any): void {
+        store.pomodorro = Number(e.target.value) * 60;
     }
 </script>
 
@@ -24,7 +30,7 @@
             class="rounded bg-gray-600/50 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             @click="openModal"
         >
-            <font-awesome-icon icon="fa-solid fa-gear" /> <span>Settings</span>
+            <font-awesome-icon icon="fa-solid fa-gear" /> <span class="sm:inline-block hidden">Settings</span>
         </button>
     </div>
     <TransitionRoot appear :show="isOpen" as="template">
@@ -66,22 +72,28 @@
                                     <div class="w-40">
                                         <label class="text-gray-400">Pomodoro</label>
                                         <input
-                                            type="number" value="25" min="1" step="1"
-                                            class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                            type="number"
+                                            min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                            :value="store.pomodorro / 60"
+                                            @input="changeTime(store.pomodorro, $event)"
                                         >
                                     </div>
                                     <div class="w-40">
                                         <label class="text-gray-400">Short Break</label>
                                         <input
-                                            type="number" value="5" min="1" step="1"
+
+                                            type="number" min="1"
                                             class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                            :value="store.shortBreak / 60"
+                                            @input="changeTime(store.shortBreak, $event)"
                                         >
                                     </div>
                                     <div class="w-40">
                                         <label class="text-gray-400">Long Break</label>
                                         <input
-                                            type="number" value="15" min="1" step="1"
-                                            class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                            type="number" min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                            :value="store.longBreak / 60"
+                                            @input="changeTime(store.longBreak, $event)"
                                         >
                                     </div>
                                 </div>
