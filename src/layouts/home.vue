@@ -23,7 +23,11 @@
         }
 
         currentPomodorro.value++;
-        activeTab.value = currentPomodorro.value && currentPomodorro.value % 4 === 0 ? 2 : 1;
+        activeTab.value = currentPomodorro.value && currentPomodorro.value % store.longBreakInterval === 0 ? 2 : 1;
+    }
+
+    function LongBreakInterval(value: any) {
+        store.longBreakInterval = Number(value);
     }
 </script>
 
@@ -33,7 +37,7 @@
             <header>
                 <AppNav>
                     <template #modal>
-                        <AppModal />
+                        <AppModal @long-break-interval="LongBreakInterval" />
                     </template>
                 </AppNav>
             </header>

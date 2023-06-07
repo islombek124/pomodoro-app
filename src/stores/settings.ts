@@ -4,7 +4,10 @@ export const useSettings = defineStore("store", () => {
     const pomodorro = ref<number>(1500);
     const shortBreak = ref<number>(300);
     const longBreak = ref<number>(900);
-    return { pomodorro, shortBreak, longBreak };
+    const longBreakInterval = ref<number>(4);
+    const autoStartBreaks = ref<boolean>(false);
+    const autoStartPomodoros = ref<boolean>(false);
+    return { pomodorro, shortBreak, longBreak, longBreakInterval, autoStartBreaks, autoStartPomodoros };
 });
 
 if (import.meta.hot)

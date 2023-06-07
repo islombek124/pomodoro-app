@@ -3,10 +3,15 @@
         Dialog,
         DialogPanel,
         DialogTitle,
-        TransitionChild,
-        TransitionRoot,
+        Switch,
+        SwitchGroup,
+        SwitchLabel, TransitionChild, TransitionRoot,
     } from "@headlessui/vue";
     import { useSettings } from "~/stores/settings";
+
+    const emit = defineEmits<{
+        (i: "LongBreakInterval"): number
+    }>();
 
     const store = useSettings();
     const isOpen = ref<boolean>(false);
@@ -57,42 +62,85 @@
                                     <font-awesome-icon icon="fa-solid fa-xmark" />
                                 </button>
                             </div>
-                            <div class="text-base text-gray-400 font-bold uppercase mt-7">
-                                <font-awesome-icon icon="fa-solid fa-clock" /> Timer
-                            </div>
-                            <div class="space-y-2">
-                                <div>
-                                    <span>Time (minutes)</span>
+                            <div>
+                                <div class="text-base text-gray-400 font-bold uppercase mt-7">
+                                    <font-awesome-icon icon="fa-solid fa-clock" /> Timer
                                 </div>
-                                <div class="flex items-center justify-between space-x-5">
-                                    <div class="w-40">
-                                        <label class="text-gray-400">Pomodoro</label>
-                                        <input
-                                            type="number"
-                                            min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
-                                            :value="store.pomodorro / 60"
-                                            @input="e => store.pomodorro = e.target.value * 60"
-                                        >
+                                <div class="space-y-2">
+                                    <div>
+                                        <span>Time (minutes)</span>
                                     </div>
-                                    <div class="w-40">
-                                        <label class="text-gray-400">Short Break</label>
-                                        <input
+                                    <div class="flex items-center justify-between space-x-5">
+                                        <div class="w-40">
+                                            <label class="text-gray-400">Pomodoro</label>
+                                            <input
+                                                type="number"
+                                                min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                                :value="store.pomodorro / 60"
+                                                @input="e => store.pomodorro = e.target.value * 60"
+                                            >
+                                        </div>
+                                        <div class="w-40">
+                                            <label class="text-gray-400">Short Break</label>
+                                            <input
 
-                                            type="number" min="1"
-                                            class="w-full px-4 py-2 rounded bg-gray-400/40"
-                                            :value="store.shortBreak / 60"
-                                            @input="e => store.shortBreak = e.target.value * 60"
-                                        >
-                                    </div>
-                                    <div class="w-40">
-                                        <label class="text-gray-400">Long Break</label>
-                                        <input
-                                            type="number" min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
-                                            :value="store.longBreak / 60"
-                                            @input="e => store.longBreak = e.target.value * 60"
-                                        >
+                                                type="number" min="1"
+                                                class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                                :value="store.shortBreak / 60"
+                                                @input="e => store.shortBreak = e.target.value * 60"
+                                            >
+                                        </div>
+                                        <div class="w-40">
+                                            <label class="text-gray-400">Long Break</label>
+                                            <input
+                                                type="number" min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
+                                                :value="store.longBreak / 60"
+                                                @input="e => store.longBreak = e.target.value * 60"
+                                            >
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <SwitchGroup as="div" class="flex items-center justify-between space-x-4 text-lg">
+                                <SwitchLabel>Auto Start Breaks</SwitchLabel>
+
+                                <Switch
+                                    v-slot="{ checked }"
+                                    v-model="store.autoStartBreaks"
+                                    as="button"
+                                    class="relative inline-flex flex-shrink-0 h-8 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-15 focus:outline-none focus:shadow-outline"
+                                    :class="store.autoStartBreaks ? 'bg-green-600' : 'bg-gray-200'"
+                                >
+                                    <span
+                                        class="inline-block w-7 h-7 transition duration-200 ease-in-out transform bg-white rounded-full"
+                                        :class="{ 'translate-x-7': checked, 'translate-x-0': !checked }"
+                                    />
+                                </Switch>
+                            </SwitchGroup>
+                            <SwitchGroup as="div" class="flex items-center justify-between space-x-4 text-lg">
+                                <SwitchLabel>Auto Start Pomodoros</SwitchLabel>
+
+                                <Switch
+                                    v-slot="{ checked }"
+                                    v-model="store.autoStartPomodoros"
+                                    as="button"
+                                    class="relative inline-flex flex-shrink-0 h-8 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-15 focus:outline-none focus:shadow-outline"
+                                    :class="store.autoStartPomodoros ? 'bg-green-600' : 'bg-gray-200'"
+                                >
+                                    <span
+                                        class="inline-block w-7 h-7 transition duration-200 ease-in-out transform bg-white rounded-full"
+                                        :class="{ 'translate-x-7': checked, 'translate-x-0': !checked }"
+                                    />
+                                </Switch>
+                            </SwitchGroup>
+                            <div class="flex items-center justify-between space-x-4 text-lg">
+                                <span class="whitespace-nowrap">Long Break interval</span>
+                                <input
+                                    type="number"
+                                    min="1" class="w-30 px-4 py-2 rounded bg-gray-400/40"
+                                    :value="store.longBreakInterval"
+                                    @input="e => emit('LongBreakInterval', e.target.value)"
+                                >
                             </div>
                         </DialogPanel>
                     </TransitionChild>
