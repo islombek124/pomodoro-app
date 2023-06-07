@@ -17,10 +17,6 @@
     function openModal(): void {
         isOpen.value = true;
     }
-
-    function changeTime(t: number, e: any): void {
-        store.pomodorro = Number(e.target.value) * 60;
-    }
 </script>
 
 <template>
@@ -75,7 +71,7 @@
                                             type="number"
                                             min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
                                             :value="store.pomodorro / 60"
-                                            @input="changeTime(store.pomodorro, $event)"
+                                            @input="e => store.pomodorro = e.target.value * 60"
                                         >
                                     </div>
                                     <div class="w-40">
@@ -85,7 +81,7 @@
                                             type="number" min="1"
                                             class="w-full px-4 py-2 rounded bg-gray-400/40"
                                             :value="store.shortBreak / 60"
-                                            @input="changeTime(store.shortBreak, $event)"
+                                            @input="e => store.shortBreak = e.target.value * 60"
                                         >
                                     </div>
                                     <div class="w-40">
@@ -93,7 +89,7 @@
                                         <input
                                             type="number" min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
                                             :value="store.longBreak / 60"
-                                            @input="changeTime(store.longBreak, $event)"
+                                            @input="e => store.longBreak = e.target.value * 60"
                                         >
                                     </div>
                                 </div>
