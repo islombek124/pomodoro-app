@@ -4,9 +4,12 @@
 
     const props = defineProps<{
         time: number
+        autoStartPomodoros: boolean
+        autoStartBreaks: boolean
     }>();
     const emit = defineEmits<{
         (e: "end"): void
+        (e: "started", val: boolean): void
     }>();
 
     const timerInterval = ref<number | undefined>(undefined);
@@ -32,6 +35,7 @@
     function start() {
         timerInterval.value = window.setInterval(onTick, 1000);
         isRunning.value = true;
+        emit("started", isRunning.value);
     }
 
     function stop() {
@@ -42,6 +46,7 @@
 
         clearInterval(timerInterval.value);
         timerInterval.value = undefined;
+        emit("started", isRunning.value);
     }
 
     function onTimeElapsed() {
@@ -53,6 +58,8 @@
     watch(() => props.time, (newVal) => {
         remaining.value = newVal;
     });
+
+    onMounted(() => props.autoStartPomodoros || props.autoStartBreaks ? start() : stop());
 
     onBeforeUnmount(() => stop());
 </script>
@@ -72,9 +79,7 @@
                 <button class="px-10 py-2 rounded bg-white uppercase pauseBtn" @click="stop">
                     Pause
                 </button>
-                <button class="text-4xl text-white absolute right-9" @click="emit('end')">
-                    <font-awesome-icon icon="fa-solid fa-forward-step" class="text-white" />
-                </button>
+                <slot />
             </div>
         </div>
     </div>

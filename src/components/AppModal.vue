@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="flex items-center justify-between space-x-5">
                                         <div class="w-40">
-                                            <label class="text-gray-400">Pomo <span class="hidden sm:inline-block">doro</span></label>
+                                            <label class="text-gray-400">Pomo<span class="hidden sm:inline-block">doro</span></label>
                                             <input
                                                 type="number"
                                                 min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
