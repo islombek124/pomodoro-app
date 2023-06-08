@@ -51,7 +51,7 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="text-black w-full max-w-md transform overflow-hidden space-y-4 rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all font-bold"
+                            class="text-black w-full max-w-md transform overflow-hidden space-y-6 rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all font-bold"
                         >
                             <div class="flex items-center justify-between">
                                 <DialogTitle as="div" class="text-lg font-bold leading-6 text-gray-900">
@@ -62,7 +62,7 @@
                                     <font-awesome-icon icon="fa-solid fa-xmark" />
                                 </button>
                             </div>
-                            <div>
+                            <div class="space-y-4">
                                 <div class="text-base text-gray-400 font-bold uppercase mt-7">
                                     <font-awesome-icon icon="fa-solid fa-clock" /> Timer
                                 </div>
@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="flex items-center justify-between space-x-5">
                                         <div class="w-40">
-                                            <label class="text-gray-400">Pomodoro</label>
+                                            <label class="text-gray-400">Pomo <span class="hidden sm:inline-block">doro</span></label>
                                             <input
                                                 type="number"
                                                 min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
@@ -81,7 +81,7 @@
                                             >
                                         </div>
                                         <div class="w-40">
-                                            <label class="text-gray-400">Short Break</label>
+                                            <label class="text-gray-400">Short <span class="hidden sm:inline-block">Break</span></label>
                                             <input
 
                                                 type="number" min="1"
@@ -91,7 +91,7 @@
                                             >
                                         </div>
                                         <div class="w-40">
-                                            <label class="text-gray-400">Long Break</label>
+                                            <label class="text-gray-400">Long <span class="hidden sm:inline-block">Break</span></label>
                                             <input
                                                 type="number" min="1" class="w-full px-4 py-2 rounded bg-gray-400/40"
                                                 :value="store.longBreak / 60"
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <SwitchGroup as="div" class="flex items-center justify-between space-x-4 text-lg">
+                            <SwitchGroup as="div" class="flex items-center justify-between space-x-4 sm:text-lg text-base">
                                 <SwitchLabel>Auto Start Breaks</SwitchLabel>
 
                                 <Switch
@@ -117,7 +117,7 @@
                                     />
                                 </Switch>
                             </SwitchGroup>
-                            <SwitchGroup as="div" class="flex items-center justify-between space-x-4 text-lg">
+                            <SwitchGroup as="div" class="flex items-center justify-between space-x-4 sm:text-lg text-base">
                                 <SwitchLabel>Auto Start Pomodoros</SwitchLabel>
 
                                 <Switch
@@ -133,11 +133,11 @@
                                     />
                                 </Switch>
                             </SwitchGroup>
-                            <div class="flex items-center justify-between space-x-4 text-lg">
+                            <div class="flex items-center justify-between space-x-4 sm:text-lg text-base">
                                 <span class="whitespace-nowrap">Long Break interval</span>
                                 <input
                                     type="number"
-                                    min="1" class="w-30 px-4 py-2 rounded bg-gray-400/40"
+                                    min="1" class="sm:w-30 w-20 px-4 py-2 rounded bg-gray-400/40"
                                     :value="store.longBreakInterval"
                                     @input="e => emit('LongBreakInterval', e.target.value)"
                                 >
